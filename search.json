@@ -11,6 +11,6 @@
     "href": "index.html",
     "title": "RKG_ProjectTest.github.io",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "This is a sample site with some examples.\nMaine has a variety of income levels across counties. Counties in Southern Maine tend to have higher incomes.\n\n\nWarning: `geom_errorbarh()` was deprecated in ggplot2 4.0.0.\nℹ Please use the `orientation` argument of `geom_errorbar()` instead."
   }
 ]
