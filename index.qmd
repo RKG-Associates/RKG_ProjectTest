@@ -2,7 +2,7 @@
 title: "RKG_ProjectTest.github.io"
 ---
 
-This is a sample site with some examples.
+This is a sample site with some examples, to check.
 
 ```{r,include=FALSE}
 library(tidycensus)
