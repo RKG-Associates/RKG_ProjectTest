@@ -101,10 +101,8 @@ continuous_scale <- interpolate_palette(
 )
 
 
-continuous_scale$labels <- scales::dollar(
-  continuous_scale$breaks,
-  accuracy = 1000
-)
+continuous_scale$breaks <- round(continuous_scale$breaks, -3)
+
 ```
 
 
@@ -145,18 +143,15 @@ maplibre(
     )
  ) |>
  add_legend(
-   "Median Household Income (USD)",
-   values = continuous_scale$breaks,
-   labels = scales::label_dollar(scale_cut = scales::cut_short_scale())(
-  continuous_scale$breaks
-),
-   colors = continuous_scale$colors,
-   type = "continuous",
-   layer_id = "income",
-   interactive = TRUE,
-   filter_column = "estimate",
-   position = "bottom-left"
- ) |>
+  "Median Household Income (USD)",
+  values = continuous_scale$breaks,
+  colors = continuous_scale$colors,
+  type = "continuous",
+  layer_id = "income",
+  interactive = TRUE,
+  filter_column = "estimate",
+  position = "bottom-left"
+) |>
  add_screenshot_control(
    position = "top-right",
    image_scale = 2
