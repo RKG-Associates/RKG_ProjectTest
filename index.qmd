@@ -67,10 +67,6 @@ dygraph(maine_xts, main = "Maine Median Household Income (ACS 5-year)") %>%
     axisLabelFormatter = "function(y){ return '$' + y.toLocaleString(); }",
     valueFormatter     = "function(y){ return '$' + y.toLocaleString(); }"
   ) %>%
-  dyAxis(
-    "x",
-    axisLabelFormatter = "function(d){ return new Date(d).getFullYear(); }"
-  ) %>%
   dyRangeSelector()
 ```
 
