@@ -4,8 +4,9 @@ project:
     - urbanform/**
 
 website:
-  title: "RKG Project Test"
+  title: ""
   navbar:
+    logo: urbanform/rkglogo_red.png
     left:
       - href: index.qmd
         text: Home

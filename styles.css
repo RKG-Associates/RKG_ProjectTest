@@ -2,31 +2,29 @@
 
 /*
  * Urban Form Map - Full viewport iframe with floating nav menu
- * Strategy: Hide Quarto navbar entirely, use custom floating menu
  */
 
 /* The iframe fills the entire screen */
 .urbanform-iframe {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  z-index: 1;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  border: none !important;
+  z-index: 100 !important;
+  display: block !important;
 }
 
-/* When urbanform page: hide everything except iframe */
+/* When urbanform page: hide navbar and prevent scroll */
 body:has(.urbanform-iframe) {
   overflow: hidden !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* Hide ALL Quarto elements including navbar */
-body:has(.urbanform-iframe) #quarto-content,
 body:has(.urbanform-iframe) #quarto-header {
   display: none !important;
 }
