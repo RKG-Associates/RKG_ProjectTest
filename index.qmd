@@ -12,6 +12,7 @@ library(patchwork)
 library(scales)
 library(dygraphs)
 library(xts)
+library(mapgl)
 
 key <- Sys.getenv("CENSUS_API_KEY")
 if (key == "") stop("CENSUS_API_KEY not found in environment")
@@ -74,17 +75,42 @@ dygraph(maine_xts, main = "Maine Median Household Income (ACS 5-year)") %>%
 ```
 
 
+
+
 ```{r,include=FALSE}
 
 maine_income <- get_acs(
   state = "Maine",
   geography = "county",
   variables = c(hhincome = "B19013_001"),
-  year = 2020
+  year = 2020,
+  geometry = TRUE
 ) %>%
   mutate(NAME = str_remove(NAME, " County, Maine"))
 
+maine_income <- maine_income %>%
+  mutate(
+    income_dollars = dollar(estimate, accuracy = 1000),
+    tooltip_text   = paste0(NAME, "<br/>Median income: ", income_dollars)
+  )
+
+maine_bounds <- sf::st_bbox(maine_income)
+
+continuous_scale <- interpolate_palette(
+  data = maine_income,
+  column = "estimate",
+  method = "quantile",
+  n = 5,
+  palette = viridisLite::viridis
+)
+
+
+continuous_scale$labels <- scales::dollar(
+  continuous_scale$breaks,
+  accuracy = 1000
+)
 ```
+
 
 Maine has a variety of income levels across counties. Counties in Southern Maine tend to have higher incomes.
 
@@ -102,6 +128,42 @@ ggplot(maine_income, aes(x = estimate, y = reorder(NAME, estimate))) +
 
 
 ```
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+maplibre(
+ bounds = maine_bounds,
+ style = carto_style("positron")
+) |>
+ add_fill_layer(
+   id = "income",
+   source = maine_income,
+   fill_color = continuous_scale$expression,
+   fill_opacity = 0.7,
+   fill_outline_color = "white",
+   tooltip = "tooltip_text",
+   hover_options = list(
+      fill_opacity = 0.9,
+      fill_outline_color = "#000000"
+    )
+ ) |>
+ add_legend(
+   "Median Household Income (USD)",
+   values = continuous_scale$breaks,
+   colors = continuous_scale$colors,
+   type = "continuous",
+   layer_id = "income",
+   interactive = TRUE,
+   filter_column = "estimate",
+   position = "bottom-left"
+ ) |>
+ add_screenshot_control(
+   position = "top-right",
+   image_scale = 2
+ )
+```
+
 
 ```{r, include = FALSE, echo=FALSE, message=FALSE, warning=FALSE}
 
