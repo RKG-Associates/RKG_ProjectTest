@@ -1,5 +1,7 @@
 project:
   type: website
+  resources:
+    - urbanform/**
 
 website:
   title: "RKG Project Test"
