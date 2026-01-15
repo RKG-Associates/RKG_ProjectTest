@@ -1,48 +1,104 @@
 /* css styles */
 
-/* Full-page iframe for Urban Form Map */
+/*
+ * Urban Form Map - Full viewport iframe with floating nav menu
+ * Strategy: Hide Quarto navbar entirely, use custom floating menu
+ */
+
+/* The iframe fills the entire screen */
 .urbanform-iframe {
   position: fixed;
-  /* Use CSS variable for navbar height, dynamically calculated */
-  top: var(--navbar-height, 56px);
+  top: 0;
   left: 0;
-  width: 100vw;
-  height: calc(100vh - var(--navbar-height, 56px));
-  height: calc(100dvh - var(--navbar-height, 56px)); /* Dynamic viewport for mobile */
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
   border: none;
-  z-index: 10;
-  display: block;
+  z-index: 1;
 }
 
-/* Hide default Quarto elements on the urbanform page */
-body:has(.urbanform-iframe) #quarto-content,
-body:has(.urbanform-iframe) .quarto-title,
-body:has(.urbanform-iframe) .quarto-title-block,
-body:has(.urbanform-iframe) main.content,
-body:has(.urbanform-iframe) header.quarto-title-block,
-body:has(.urbanform-iframe) h1.title {
-  padding: 0 !important;
+/* When urbanform page: hide everything except iframe */
+body:has(.urbanform-iframe) {
+  overflow: hidden !important;
   margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Hide ALL Quarto elements including navbar */
+body:has(.urbanform-iframe) #quarto-content,
+body:has(.urbanform-iframe) #quarto-header {
   display: none !important;
 }
 
-body:has(.urbanform-iframe) {
-  overflow: hidden;
+/* Floating navigation menu */
+.floating-nav {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 2000;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Dynamically set navbar height based on actual navbar */
-body:has(.urbanform-iframe) {
-  --navbar-height: 56px;
+.floating-nav-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #374151;
+  transition: all 0.2s ease;
 }
 
-/* Ensure no gap - attach iframe directly below navbar */
-body:has(.urbanform-iframe) #quarto-content {
-  display: block !important;
-  padding-top: 0 !important;
-  margin-top: 0 !important;
+.floating-nav-toggle:hover {
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-body:has(.urbanform-iframe) main {
-  padding: 0 !important;
-  margin: 0 !important;
+.floating-nav-menu {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  min-width: 180px;
+  padding: 8px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s ease;
+}
+
+.floating-nav-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.floating-nav-menu a {
+  display: block;
+  padding: 12px 20px;
+  color: #374151;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s ease;
+}
+
+.floating-nav-menu a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.floating-nav-menu a.active {
+  color: #4361EE;
+  background: rgba(67, 97, 238, 0.08);
 }

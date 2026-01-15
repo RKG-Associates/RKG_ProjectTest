@@ -7,26 +7,17 @@ title-block: none
 ---
 
 ```{=html}
-<iframe src="urbanform/index.html" class="urbanform-iframe" id="map-iframe"></iframe>
-<script>
-  // Dynamically position iframe directly below navbar
-  function positionIframe() {
-    const navbar = document.querySelector('nav.navbar, .navbar, header nav, #quarto-header');
-    const iframe = document.getElementById('map-iframe');
-    if (navbar && iframe) {
-      const navbarHeight = navbar.getBoundingClientRect().height;
-      iframe.style.top = navbarHeight + 'px';
-      iframe.style.height = 'calc(100vh - ' + navbarHeight + 'px)';
-      iframe.style.height = 'calc(100dvh - ' + navbarHeight + 'px)';
-    }
-  }
+<iframe src="urbanform/index.html" class="urbanform-iframe"></iframe>
 
-  // Run on load and resize
-  document.addEventListener('DOMContentLoaded', positionIframe);
-  window.addEventListener('resize', positionIframe);
-  window.addEventListener('load', positionIframe);
-
-  // Also run immediately in case DOM is already ready
-  positionIframe();
-</script>
+<!-- Floating Navigation Menu -->
+<nav class="floating-nav">
+  <button class="floating-nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle navigation">
+    ☰
+  </button>
+  <div class="floating-nav-menu">
+    <a href="index.html">Home</a>
+    <a href="urbanform.html" class="active">Urban Form Map</a>
+    <a href="about.html">About</a>
+  </div>
+</nav>
 ```
