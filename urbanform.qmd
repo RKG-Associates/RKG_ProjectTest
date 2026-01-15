@@ -1,8 +1,9 @@
 ---
-title: "Urban Form Map"
+title: ""
 pagetitle: "Urban Form Map"
 toc: false
 page-layout: custom
+title-block: none
 ---
 
 ```{=html}
